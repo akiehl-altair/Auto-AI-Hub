@@ -1,0 +1,2 @@
+# auto-ai-hub
+Configurable tool to install RapidMiner AI-Hubs from scratch, including cryptography
