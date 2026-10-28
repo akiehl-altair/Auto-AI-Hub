@@ -11,7 +11,6 @@ TRACE=0
 PORTLIC="6200"
 HOSTLIC="127.0.0.1"
 CombinedHostname=""
-UniqueIdentifier="00000000"
 SUFFIXHOSTNAME="local"
 
 #FUNCTIONS
@@ -42,22 +41,21 @@ function helpfile () {
       echo 'Options:'
       echo ' -u, --username=<username>          MANDATORY. Specify the linux username that will operate the AI-Hub'
       echo ' -p, --password=<aihub_password>    MANDATORY. Admin password cannot contain special characters or spaces'
+      echo ' -w, --webprefix=<string>           MANDATORY. Unique subdomain webaddress prefix to URL for AI-Hub'          
       echo ' -d, --directory=<path>             The directory to install into, by default will install to home folder'
       echo ' -H, --hostname=<hostname>          This is the hostname to the license server. Defaults to 127.0.0.1'
       echo ' -P, --port=<port>                  Network port number for the license server.  Defaults to 6200'    
-      echo ' -w, --webprefix=<string>           Unique webaddress prefix to URL for AI-Hub.  Defaults to auto-ai-hub'          
-      echo ' -L, --TLD=<string>                 Use real FQDN TLD suffix. Ex: "com" or "org" or "edu".  Defaults to local'          
-      echo ' -i, --id                           Disables Uniquie Identifier UUID for hostnmame.  Default is enabled'
+      echo ' -L, --TLD=<string>                 Use real fully qualified domain. Ex: "example.com" or "school.edu".  Defaults to simply ".local"'          
       echo ' -c, --credentials                  Prompts user for license login.  Ignores license hostname and port'
       echo ' -s, --skipdocker                   Skips the docker installation'
       echo ' -v, --verbose                      Run the command with extra output'
       echo ' -t, --trace                        Run the command with trace ouput'
       echo ' -h, --help                         Displays this help document as output'
       echo 'Examples:'
-      echo 'auto-ai-hub.sh -u=ingo -p=agoodpassword'
-      echo 'auto-ai-hub.sh -u=john -p=agoodpassword -d=/opt/autoaihub -H=10.0.15.100 -P=6201'
-      echo 'auto-ai-hub.sh --username=ingo --password=agoodpassword --credentials --verbose'
-      echo 'auto-ai-hub.sh --username=ingo --password=agoodpassword --id --webprefix=ingohub --TLD=com --credentials --verbose'
+      echo 'auto-ai-hub.sh -u=ingo -p=agoodpassword -w=auto-ai-hub'
+      echo 'auto-ai-hub.sh -u=ingo -p=agoodpassword -d=/opt/autoaihub -w=auto-ai-hub -H=10.0.15.100 -P=6201'
+      echo 'auto-ai-hub.sh --username=ingo --password=agoodpassword --webprefix=ingotesthub --credentials --verbose'
+      echo 'auto-ai-hub.sh --username=ingo --password=agoodpassword --webprefix=ingoprodhub --TLD=example.com --credentials --verbose'
 }
 
 #exit documentation
@@ -76,7 +74,7 @@ echo "-------------------------------------------------------------"
 echo "YOU WILL ALMOST CERTAINLY NEED TO ADD THE FOLLOWING LINE"
 echo "OF HOSTNAMES TO YOUR PC/LAPTOP \"HOSTS\" FILE TO USE THE AI-HUB"
 echo "-------------------------------------------------------------"
-echo "${FunctionalAddress}       ${CombinedHostname}       ${PREFIXHOSTNAME}-${UniqueIdentifier}"
+echo "${FunctionalAddress}       ${CombinedHostname}"
 echo ""
 echo "-------------------------------------------------------------"
 echo "When completed, browse to https://${CombinedHostname}"
@@ -367,13 +365,9 @@ $echolog "Configured TZ"
 mkdir -p "${HOMEDIRECTORY}"/my-certs
 $echolog "Created my-certs folder"
 
-UniqueIdentifier=$(openssl rand -hex 4)
-#UniqueIdentifier="$(tr -dc a-f0-9 < /dev/urandom | head -c 8)"
-$echolog "Created UniqueIdentifier"
-
-#read the source with the unique id and write it into the config
+#read the source and write it into the config
 $echolog "Configuring hostnames"
-CombinedHostname="${PREFIXHOSTNAME}-${UniqueIdentifier}.${SUFFIXHOSTNAME}"
+CombinedHostname="${PREFIXHOSTNAME}.${SUFFIXHOSTNAME}"
 sed -i "s%PUBLIC_DOMAIN=platform.rapidminer.com%PUBLIC_DOMAIN=${CombinedHostname}%g" "${HOMEDIRECTORY}"/prod/.env
 sed -i "s%SSO_PUBLIC_DOMAIN=platform.rapidminer.com%SSO_PUBLIC_DOMAIN=${CombinedHostname}%g" "${HOMEDIRECTORY}"/prod/.env
 $echolog "Hostnames set to ${CombinedHostname}"
