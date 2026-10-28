@@ -2,7 +2,7 @@
 #set -o errexit -o pipefail -o noclobber -o nounset -o posix
 
 #VARIABLES
-hubversion="2026.1.1"
+hubversion="2026.1.2.1"
 PREFIXHOSTNAME="auto-ai-hub"
 VERBOSE=0
 CREDLIC=0
@@ -12,7 +12,7 @@ PORTLIC="6200"
 HOSTLIC="127.0.0.1"
 CombinedHostname=""
 UniqueIdentifier="00000000"
-
+SUFFIXHOSTNAME="local"
 
 #FUNCTIONS
 #DOCUMENTATION
@@ -370,7 +370,7 @@ $echolog "Created UniqueIdentifier"
 
 #read the source with the unique id and write it into the config
 $echolog "Configuring hostnames"
-CombinedHostname="${PREFIXHOSTNAME}-${UniqueIdentifier}.local"
+CombinedHostname="${PREFIXHOSTNAME}-${UniqueIdentifier}.${SUFFIXHOSTNAME}"
 sed -i "s%PUBLIC_DOMAIN=platform.rapidminer.com%PUBLIC_DOMAIN=${CombinedHostname}%g" "${HOMEDIRECTORY}"/prod/.env
 sed -i "s%SSO_PUBLIC_DOMAIN=platform.rapidminer.com%SSO_PUBLIC_DOMAIN=${CombinedHostname}%g" "${HOMEDIRECTORY}"/prod/.env
 $echolog "Hostnames set to ${CombinedHostname}"
