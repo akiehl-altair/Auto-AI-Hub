@@ -46,6 +46,8 @@ function helpfile () {
       echo ' -H, --hostname=<hostname>          This is the hostname to the license server. Defaults to 127.0.0.1'
       echo ' -P, --port=<port>                  Network port number for the license server.  Defaults to 6200'    
       echo ' -w, --webprefix=<string>           Unique webaddress prefix to URL for AI-Hub.  Defaults to auto-ai-hub'          
+      echo ' -L, --TLD=<string>                 Use real FQDN TLD suffix. Ex: "com" or "org" or "edu".  Defaults to local'          
+      echo ' -i, --id                           Disables Uniquie Identifier UUID for hostnmame.  Default is enabled'
       echo ' -c, --credentials                  Prompts user for license login.  Ignores license hostname and port'
       echo ' -s, --skipdocker                   Skips the docker installation'
       echo ' -v, --verbose                      Run the command with extra output'
@@ -55,6 +57,7 @@ function helpfile () {
       echo 'auto-ai-hub.sh -u=ingo -p=agoodpassword'
       echo 'auto-ai-hub.sh -u=john -p=agoodpassword -d=/opt/autoaihub -H=10.0.15.100 -P=6201'
       echo 'auto-ai-hub.sh --username=ingo --password=agoodpassword --credentials --verbose'
+      echo 'auto-ai-hub.sh --username=ingo --password=agoodpassword --id --webprefix=ingohub --TLD=com --credentials --verbose'
 }
 
 #exit documentation
