@@ -26,27 +26,30 @@ chmod +x auto-ai-hub.sh
 
 ### Docs
 ```
-Usage: 
- auto-ai-hub.sh <parameters> 
- 
-Create an AI-Hub automatically. 
- 
-Options: 
- -u, --username=<username>          MANDATORY. Specify the linux username that will operate the AI-Hub 
- -p, --password=<aihub_password>    MANDATORY. Admin password cannot contain special characters or spaces 
- -d, --directory=<path>             The directory to install into, by default will install to home folder 
- -H, --hostname=<hostname>          This is the hostname to the license server. Defaults to 127.0.0.1 
- -P, --port=<port>                  Network port number for the license server.  Defaults to 6200     
- -w, --webprefix=<string>           Unique webaddress prefix to URL for AI-Hub.  Defaults to auto-ai-hub           
- -c, --credentials                  Prompts user for license login.  Ignores license hostname and port 
- -s, --skipdocker                   Skips the docker installation 
- -v, --verbose                      Run the command with extra output 
- -t, --trace                        Run the command with trace ouput 
- -h, --help                         Displays this help document as output 
-Examples: 
-auto-ai-hub.sh -u=ingo -p=agoodpassword 
-auto-ai-hub.sh -u=john -p=agoodpassword -d=/opt/autoaihub -H=10.0.15.100 -P=6201 
-auto-ai-hub.sh --username=ingo --password=agoodpassword --credentials --verbose 
+Usage:
+ auto-ai-hub.sh <parameters>
+
+Create an AI-Hub automatically.
+
+Options:
+ -u, --username=<username>          MANDATORY. Specify the linux username that will operate the AI-Hub
+ -p, --password=<aihub_password>    MANDATORY. Admin password cannot contain special characters or spaces
+ -w, --webprefix=<string>           MANDATORY. Unique subdomain webaddress prefix to URL for AI-Hub         
+ -d, --directory=<path>             The directory to install into, by default will install to home folder
+ -H, --hostname=<hostname>          This is the hostname to the license server. Defaults to 127.0.0.1
+ -P, --port=<port>                  Network port number for the license server.  Defaults to 6200'   
+ -L, --TLD=<string>                 Use real fully qualified domain. Ex: "example.com" or "school.edu".  Defaults to simply ".local"        
+ -c, --credentials                  Prompts user for license login.  Ignores license hostname and port
+ -s, --skipdocker                   Skips the docker installation
+ -v, --verbose                      Run the command with extra output
+ -t, --trace                        Run the command with trace ouput
+ -h, --help                         Displays this help document as output
+Examples:
+auto-ai-hub.sh -u=ingo -p=agoodpassword -w=auto-ai-hub
+auto-ai-hub.sh -u=ingo -p=agoodpassword -d=/opt/autoaihub -w=auto-ai-hub -H=10.0.15.100 -P=6201
+auto-ai-hub.sh --username=ingo --password=agoodpassword --webprefix=ingotesthub --credentials --verbose
+auto-ai-hub.sh --username=ingo --password=agoodpassword --webprefix=ingoprodhub --TLD=example.com --credentials --verbose
+
 
 
 ### License
