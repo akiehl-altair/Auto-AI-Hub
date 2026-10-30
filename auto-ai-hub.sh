@@ -2,7 +2,7 @@
 #set -o errexit -o pipefail -o noclobber -o nounset -o posix
 
 #VARIABLES
-hubversion="2026.1.2.1"
+hubversion="2026.1.2"
 PREFIXHOSTNAME="auto-ai-hub"
 VERBOSE=0
 CREDLIC=0
@@ -167,6 +167,17 @@ for i in "$@"; do
       fi
       shift # past argument=value
       ;;    
+    
+    -l=*|--TLD=*)
+
+      if [[ "${i#*=}" =~ ^[a-zA-Z0-9_.-]+$ ]]; then
+      SUFFIXHOSTNAME="${i#*=}"
+      else
+        echo 'For the hostname TLD you are only allowed to use basic characters a-z A-Z 0-9 . -'
+        exit 1
+      fi
+      shift # past argument=value
+      ;;    
       
     -c|--credentials)
       CREDLIC=1
@@ -218,6 +229,11 @@ if [[ -z  "${AIHUBUSER}" || -z "${ADMINPASSWORD}" ]]; then
   echo "ERROR: -u|--username and -p|--password are mandatory arguements."
   exit 1;
 fi
+if [[ -z "${PREFIXHOSTNAME}" ]]; then
+  echo "ERROR: -w|--webprefix is a mandatory arguement."
+  exit 1;
+fi
+
 if [[ -z "${HOMEDIRECTORY}" ]]; then
   HOMEDIRECTORY="/home/${AIHUBUSER}"
 fi
