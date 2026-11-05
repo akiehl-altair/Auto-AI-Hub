@@ -58,7 +58,7 @@ function helpfile () {
       echo 'auto-ai-hub.sh -u=ingo -p=agoodpassword -w=auto-ai-hub'
       echo 'auto-ai-hub.sh -u=ingo -p=agoodpassword -d=/opt/autoaihub -w=auto-ai-hub -H=10.0.15.100 -P=6201'
       echo 'auto-ai-hub.sh --username=ingo --password=agoodpassword --webprefix=ingotesthub --credentials --verbose'
-      echo 'auto-ai-hub.sh --username=ingo --password=agoodpassword --webprefix=ingoprodhub --TLD=example.com --credentials --verbose'
+      echo 'auto-ai-hub.sh --username=ingo --password=agoodpassword --webprefix=ingoprodhub --TLD=example.com --auth --verbose'
 }
 
 #exit documentation
