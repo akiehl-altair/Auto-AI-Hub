@@ -266,15 +266,16 @@ case $OperatingSystem in
     $echolog "Detected Red Hat operating system"    
     dnf update -y
     dnf upgrade -y
-    dnf install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-10.noarch.rpm
-    dnf install -y curl wget vim unzip openssl git haveged net-tools openssl
+    sudo dnf config-manager --set-enabled crb
+    dnf install -y epel-release
+    dnf install -y --nogpgcheck curl wget vim unzip openssl git haveged net-tools openssl
     if [ "${SKIPDOCKER}" = 0 ]; then     
       $echolog "Attempting to install docker"
       dnf remove -y docker docker-client docker-client-latest docker-common docker-latest docker-latest-logrotate docker-logrotate docker-engine podman runc
       dnf config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
       sed -i 's/rhel/centos/g' /etc/yum.repos.d/docker-ce.repo
       dnf update -y
-      dnf install -y docker-ce docker-ce-cli containerd.io
+      dnf install -y --nogpgcheck docker-ce docker-ce-cli containerd.io
       $echolog "Installed docker compose on RHEL"
     else
      $echolog "Docker was not reinstalled because SKIPDOCKER was set"
@@ -285,15 +286,16 @@ case $OperatingSystem in
     $echolog "Detected Oracle operating system"    
     dnf update -y
     dnf upgrade -y
-    dnf install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-10.noarch.rpm
-    dnf install -y curl wget vim unzip openssl git haveged net-tools openssl
+    sudo dnf config-manager --set-enabled crb
+    dnf install -y epel-release
+    dnf install -y --nogpgcheck curl wget vim unzip openssl git haveged net-tools openssl
     if [ "${SKIPDOCKER}" = 0 ]; then     
       $echolog "Attempting to install docker"
       dnf remove -y docker docker-client docker-client-latest docker-common docker-latest docker-latest-logrotate docker-logrotate docker-engine podman runc
       dnf config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
       sed -i 's/rhel/centos/g' /etc/yum.repos.d/docker-ce.repo
       dnf update -y
-      dnf install -y docker-ce docker-ce-cli containerd.io
+      dnf install -y --nogpgcheck docker-ce docker-ce-cli containerd.io
       $echolog "Installed docker compose on Oracle"
     else
      $echolog "Docker was not reinstalled because SKIPDOCKER was set"
@@ -310,12 +312,12 @@ case $OperatingSystem in
     fi
     dnf update -y
     dnf upgrade -y
-    dnf install -y spal-release
-    dnf install -y wget vim unzip openssl certbot git unzip openssl haveged net-tools   
+    dnf install -y --nogpgcheck spal-release
+    dnf install -y --nogpgcheck wget vim unzip openssl certbot git unzip openssl haveged net-tools   
     if [ "${SKIPDOCKER}" = 0 ]; then     
       $echolog "Attempting to install docker"
-      dnf install -y docker
-      dnf install -y docker-compose.x86_64 --allowerasing
+      dnf install -y --nogpgcheck docker
+      dnf install -y --nogpgcheck docker-compose.x86_64 --allowerasing
       $echolog "Installed docker compose on Rocky Linux"
     else
      $echolog "Docker was not reinstalled because SKIPDOCKER was set"
@@ -327,8 +329,9 @@ case $OperatingSystem in
     $echolog "Detected Rocky operating system"    
     dnf update -y
     dnf upgrade -y
-    dnf install -y epel-release
-    dnf install -y haveged dnf-utils curl wget vim unzip openssl net-tools git --allowerasing        
+    sudo dnf config-manager --set-enabled crb
+    dnf install -y --nogpgcheck epel-release
+    dnf install -y --nogpgcheck haveged dnf-utils curl wget vim unzip openssl net-tools git --allowerasing        
     if [ "${SKIPDOCKER}" = 0 ]; then     
       $echolog "Attempting to install docker"
       dnf remove -y docker*
