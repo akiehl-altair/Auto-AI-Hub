@@ -193,7 +193,7 @@ for i in "$@"; do
       shift # past argument=value
       ;;
 
-    -a=*|--auth=*)
+    -a|--auth)
       AUTHCODE=1
       shift # past argument=value
       ;;
