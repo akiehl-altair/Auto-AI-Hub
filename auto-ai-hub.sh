@@ -49,7 +49,7 @@ function helpfile () {
       echo ' -P, --port=<port>                  Network port number for the license server.  Defaults to 6200'    
       echo ' -L, --TLD=<string>                 Use real fully qualified domain. Ex: "example.com" or "school.edu".  Defaults to simply ".local"'          
       echo ' -c, --credentials                  Prompts user for license login.  Ignores license hostname and port'
-      echo ' -a, --auth=<string>                Enables auth code license.  Ignores credentials, license, hostname and port'
+      echo ' -a, --auth                         Enables auth code license.  Ignores credentials, license, hostname and port'
       echo ' -s, --skipdocker                   Skips the docker installation'
       echo ' -v, --verbose                      Run the command with extra output'
       echo ' -t, --trace                        Run the command with trace ouput'
