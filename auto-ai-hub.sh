@@ -12,6 +12,7 @@ PORTLIC="6200"
 HOSTLIC="127.0.0.1"
 CombinedHostname=""
 SUFFIXHOSTNAME="local"
+AUTHCODE=""
 
 #FUNCTIONS
 #DOCUMENTATION
@@ -21,6 +22,7 @@ function startsplash () {
 printf "\n"
 echo "Auto-AI-Hub Setup script"
 echo "SIEMENS - Anthony Kiehl"
+echo "Version 2.0 - 11/5/26 Prod Release"
 echo "Version 1.2 - 8/5/26 Feature Update"
 echo "Version 1.0 - 6/9/26 Initial Release"
 echo "Special thanks to: Helge H, Sebastian L, Geetha T"
@@ -47,6 +49,7 @@ function helpfile () {
       echo ' -P, --port=<port>                  Network port number for the license server.  Defaults to 6200'    
       echo ' -L, --TLD=<string>                 Use real fully qualified domain. Ex: "example.com" or "school.edu".  Defaults to simply ".local"'          
       echo ' -c, --credentials                  Prompts user for license login.  Ignores license hostname and port'
+      echo ' -a, --auth=<string>                Enables auth code license.  Ignores credentials, license, hostname and port'
       echo ' -s, --skipdocker                   Skips the docker installation'
       echo ' -v, --verbose                      Run the command with extra output'
       echo ' -t, --trace                        Run the command with trace ouput'
@@ -79,6 +82,12 @@ echo ""
 echo "-------------------------------------------------------------"
 echo "When completed, browse to https://${CombinedHostname}"
 echo "If you need to turn off the AI-Hub or restart the system, use docker compose down"
+echo "If you elected to use \"AUTHCODE\" with -a or --auth, you must now generate the code"
+echo "at https://altairone.com/marketplace and after this, shutdown the AI-Hub"
+echo "While it is offline, add the auth code to the prod/.env file and at this"
+echo "entry in the file:  \"LICENSE_UNIT_MANAGER_AUTH_CODE=\""
+
+
 echo "============================================================="
 echo ""
 }
@@ -181,6 +190,11 @@ for i in "$@"; do
       
     -c|--credentials)
       CREDLIC=1
+      shift # past argument=value
+      ;;
+
+    -a=*|--auth=*)
+      AUTHCODE=1
       shift # past argument=value
       ;;
         
@@ -449,9 +463,19 @@ if [ "$CREDLIC" -eq 1 ]; then
     sed -i "s/LICENSE_UNIT_MANAGER_USER_NAME=/LICENSE_UNIT_MANAGER_USER_NAME=${LicenseUser}/g" "${HOMEDIRECTORY}"/prod/.env
     sed -i "s/LICENSE_PROXY_MODE=on_prem/LICENSE_PROXY_MODE=altair_one/g" "${HOMEDIRECTORY}"/prod/.env
     sed -i "s/LICENSE_UNIT_MANAGER_PASSWORD=/LICENSE_UNIT_MANAGER_PASSWORD=${LicenseUserPassword}/g" "${HOMEDIRECTORY}"/prod/.env
+elif [ "$AUTHCODE" -eq 1  ]; then
+	#Altair Auth Code
+	echo "Installing Altair Auth Code"
+	sleep 1
+	sed -i "s/LICENSE_PROXY_MODE=on_prem/LICENSE_PROXY_MODE=altair_one/g" "${HOMEDIRECTORY}"/prod/.env
+	sed -i "s/LICENSE_UNIT_MANAGER_AUTHENTICATION_TYPE=credentials/LICENSE_UNIT_MANAGER_AUTHENTICATION_TYPE=auth_code/g" "${HOMEDIRECTORY}"/prod/.env
+      sleep 1
+	echo "Remember to generate your auth code at AltairOne Marketplace after pulling images and manually add to \".env\" file."
+      echo "The server will need an authcode generated and added to \"LICENSE_UNIT_MANAGER_AUTH_CODE=\" which is inside of the \".env\" file."
+      sleep 10      
 else
 #on prem license
-    $echolog "User did not specify \"creds\" as a command argument, defaulting to prem license server."
+    $echolog "User did not specify \"creds\" or \"auth\" as a command argument, defaulting to prem license server."
     
     LicensePath="${PORTLIC}"
     LicensePath+='@'
