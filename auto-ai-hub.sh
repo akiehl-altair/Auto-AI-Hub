@@ -268,7 +268,7 @@ case $OperatingSystem in
     dnf upgrade -y
     sudo dnf config-manager --set-enabled crb
     dnf install -y epel-release
-    dnf install -y --nogpgcheck curl wget vim unzip openssl git haveged net-tools openssl
+    dnf install -y --nogpgcheck curl wget vim unzip openssl git haveged net-tools certbot openssl
     if [ "${SKIPDOCKER}" = 0 ]; then     
       $echolog "Attempting to install docker"
       dnf remove -y docker docker-client docker-client-latest docker-common docker-latest docker-latest-logrotate docker-logrotate docker-engine podman runc
@@ -288,7 +288,7 @@ case $OperatingSystem in
     dnf upgrade -y
     sudo dnf config-manager --set-enabled crb
     dnf install -y epel-release
-    dnf install -y --nogpgcheck curl wget vim unzip openssl git haveged net-tools openssl
+    dnf install -y --nogpgcheck curl wget vim unzip openssl git haveged net-tools certbot openssl
     if [ "${SKIPDOCKER}" = 0 ]; then     
       $echolog "Attempting to install docker"
       dnf remove -y docker docker-client docker-client-latest docker-common docker-latest docker-latest-logrotate docker-logrotate docker-engine podman runc
@@ -331,7 +331,7 @@ case $OperatingSystem in
     dnf upgrade -y
     sudo dnf config-manager --set-enabled crb
     dnf install -y --nogpgcheck epel-release
-    dnf install -y --nogpgcheck haveged dnf-utils curl wget vim unzip openssl net-tools git --allowerasing        
+    dnf install -y --nogpgcheck haveged dnf-utils curl wget vim unzip openssl mod_ssl certbot net-tools git --allowerasing        
     if [ "${SKIPDOCKER}" = 0 ]; then     
       $echolog "Attempting to install docker"
       dnf remove -y docker*
@@ -348,7 +348,7 @@ case $OperatingSystem in
     $echolog "Detected Ubuntu operating system"    
     DEBIAN_FRONTEND=noninteractive apt-get update -y
     DEBIAN_FRONTEND=noninteractive apt-get upgrade -y
-    DEBIAN_FRONTEND=noninteractive apt-get install -y unzip curl wget net-tools vim ca-certificates net-tools gnupg lsb-release haveged openssl git
+    DEBIAN_FRONTEND=noninteractive apt-get install -y unzip curl wget net-tools vim ca-certificates certbot net-tools gnupg lsb-release haveged openssl git
     if [ "${SKIPDOCKER}" = 0 ]; then 
       $echolog "Attempting to install docker"
       DEBIAN_FRONTEND=noninteractive apt-get remove -y docker docker.io containerd runc
