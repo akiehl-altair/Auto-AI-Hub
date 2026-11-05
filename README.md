@@ -49,7 +49,7 @@ Examples:
 auto-ai-hub.sh -u=ingo -p=agoodpassword -w=auto-ai-hub
 auto-ai-hub.sh -u=ingo -p=agoodpassword -d=/opt/autoaihub -w=auto-ai-hub -H=10.0.15.100 -P=6201
 auto-ai-hub.sh --username=ingo --password=agoodpassword --webprefix=ingotesthub --credentials --verbose
-auto-ai-hub.sh --username=ingo --password=agoodpassword --webprefix=ingoprodhub --TLD=example.com --credentials --verbose
+auto-ai-hub.sh --username=ingo --password=agoodpassword --webprefix=ingoprodhub --TLD=example.com --auth --verbose
 
 
 
